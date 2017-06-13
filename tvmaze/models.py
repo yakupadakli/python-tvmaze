@@ -45,6 +45,14 @@ class Show(Model):
         show = super(Show, cls).parse(data)
         if hasattr(show, "image"):
             show.image = Image.parse(show.image)
+        if hasattr(show, "network"):
+            show.network = Network.parse(show.network)
+        if hasattr(show, "externals"):
+            show.externals = External.parse(show.externals)
+        if hasattr(show, "rating"):
+            show.rating = Rating.parse(show.rating)
+        if hasattr(show, "schedule"):
+            show.schedule = Schedule.parse(show.schedule)
         return show
 
 
@@ -58,7 +66,7 @@ class Episode(Model):
     def parse(cls, data):
         episode = super(Episode, cls).parse(data)
         if hasattr(episode, "show"):
-            episode.show = Country.parse(episode.show)
+            episode.show = Show.parse(episode.show)
         return episode
 
 
@@ -67,6 +75,15 @@ class Season(Model):
     def __init__(self, **kwargs):
         super(Season, self).__init__(**kwargs)
         self._repr_values = {"number": "Season"}
+
+    @classmethod
+    def parse(cls, data):
+        season = super(Season, cls).parse(data)
+        if hasattr(season, "network"):
+            season.network = Network.parse(season.network)
+        if hasattr(season, "image"):
+            season.image = Image.parse(season.image)
+        return season
 
 
 class Cast(Model):
@@ -87,12 +104,26 @@ class Person(Model):
         super(Person, self).__init__(**kwargs)
         self._repr_values = {"name": "Name"}
 
+    @classmethod
+    def parse(cls, data):
+        person = super(Person, cls).parse(data)
+        if hasattr(person, "image"):
+            person.image = Image.parse(person.image)
+        return person
+
 
 class Character(Model):
 
     def __init__(self, **kwargs):
         super(Character, self).__init__(**kwargs)
         self._repr_values = {"name": "Name"}
+
+    @classmethod
+    def parse(cls, data):
+        character = super(Character, cls).parse(data)
+        if hasattr(character, "image"):
+            character.image = Image.parse(character.image)
+        return character
 
 
 class Crew(Model):
@@ -175,3 +206,38 @@ class CrewCredit(Model):
             show = crew_credit._embedded.get("show")
             crew_credit.show = Show.parse(show)
         return crew_credit
+
+
+class Network(Model):
+
+    def __init__(self, **kwargs):
+        super(Network, self).__init__(**kwargs)
+        self._repr_values = {"name": "Name"}
+
+    @classmethod
+    def parse(cls, data):
+        network = super(Network, cls).parse(data)
+        if hasattr(network, "country"):
+            network.country = Country.parse(network.country)
+        return network
+
+
+class External(Model):
+
+    def __init__(self, **kwargs):
+        super(External, self).__init__(**kwargs)
+        self._repr_values = {"imdb": "IMDB"}
+
+
+class Rating(Model):
+
+    def __init__(self, **kwargs):
+        super(Rating, self).__init__(**kwargs)
+        self._repr_values = {"average": "Average"}
+
+
+class Schedule(Model):
+
+    def __init__(self, **kwargs):
+        super(Schedule, self).__init__(**kwargs)
+        self._repr_values = {"time": "Time", "days": "Days"}
