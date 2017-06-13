@@ -1,3 +1,4 @@
+from tvmaze.episode import Episode
 from tvmaze.people import People
 from tvmaze.schedule import Schedule
 from tvmaze.show import Show
@@ -24,3 +25,7 @@ class Api(object):
     @property
     def schedule(self):
         return Schedule(api=self)
+
+    @property
+    def episode(self):
+        return Episode(api=self)
