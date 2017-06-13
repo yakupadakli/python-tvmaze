@@ -1,0 +1,16 @@
+from tvmaze.show import Show
+
+
+class Api(object):
+    BASE_URL = "http://api.tvmaze.com"
+
+    def __init__(self, **kwargs):
+        """
+        TvMaze Api
+        :param kwargs:
+        """
+        self.base_url = self.BASE_URL
+
+    @property
+    def show(self):
+        return Show(api=self)
