@@ -1,3 +1,4 @@
+from tvmaze.people import People
 from tvmaze.show import Show
 
 
@@ -14,3 +15,7 @@ class Api(object):
     @property
     def show(self):
         return Show(api=self)
+
+    @property
+    def people(self):
+        return People(api=self)
