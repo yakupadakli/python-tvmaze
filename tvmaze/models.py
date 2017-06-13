@@ -54,6 +54,13 @@ class Episode(Model):
         super(Episode, self).__init__(**kwargs)
         self._repr_values = {"name": "Name", "season": "Season", "number": "Episode"}
 
+    @classmethod
+    def parse(cls, data):
+        episode = super(Episode, cls).parse(data)
+        if hasattr(episode, "show"):
+            episode.show = Country.parse(episode.show)
+        return episode
+
 
 class Season(Model):
 
