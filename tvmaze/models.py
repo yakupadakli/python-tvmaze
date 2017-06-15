@@ -53,6 +53,8 @@ class Show(Model):
             show.rating = Rating.parse(show.rating)
         if hasattr(show, "schedule"):
             show.schedule = Schedule.parse(show.schedule)
+        if hasattr(show, "webChannel"):
+            show.webChannel = WebChannel.parse(show.webChannel)
         return show
 
 
@@ -241,3 +243,17 @@ class Schedule(Model):
     def __init__(self, **kwargs):
         super(Schedule, self).__init__(**kwargs)
         self._repr_values = {"time": "Time", "days": "Days"}
+
+
+class WebChannel(Model):
+
+    def __init__(self, **kwargs):
+        super(WebChannel, self).__init__(**kwargs)
+        self._repr_values = {"time": "Time", "days": "Days"}
+
+    @classmethod
+    def parse(cls, data):
+        web_channel = super(WebChannel, cls).parse(data)
+        if hasattr(web_channel, "country"):
+            web_channel.country = Country.parse(web_channel.country)
+        return web_channel
