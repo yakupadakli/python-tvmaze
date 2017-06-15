@@ -22,7 +22,7 @@ class Search(Client):
         result = self._get("/%s/shows" % self.single_search_url, params={"q": query})
         return ShowModel.parse(result)
 
-    def lookup_show(self, lookup_id, lookup_option):
+    def lookup_show(self, lookup_option, lookup_id):
         if lookup_option not in self.lookup_fields:
             raise Exception("Invalid lookup option")
         result = self._get("/%s/shows" % self.lookup_url, params={lookup_option: lookup_id})

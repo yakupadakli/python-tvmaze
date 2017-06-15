@@ -5,6 +5,7 @@ from tvmaze.people import People
 from tvmaze.schedule import Schedule
 from tvmaze.search import Search
 from tvmaze.show import Show
+from tvmaze.webchannel import WebChannel
 
 
 class Api(object):
@@ -44,3 +45,7 @@ class Api(object):
     @property
     def character(self):
         return Character(api=self)
+
+    @property
+    def web_channel(self):
+        return WebChannel(api=self)

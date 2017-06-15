@@ -10,7 +10,7 @@ requirements = [str(req.req) for req in install_requirements]
 
 setup(
     name="python-tvmaze",
-    version="1.0.1a1",
+    version="1.0.3a1",
     description="A Python client for the TvMaze API.",
     license="MIT",
     author="Yakup Adaklı",
