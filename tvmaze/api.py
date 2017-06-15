@@ -1,4 +1,6 @@
+from tvmaze.character import Character
 from tvmaze.episode import Episode
+from tvmaze.network import Network
 from tvmaze.people import People
 from tvmaze.schedule import Schedule
 from tvmaze.search import Search
@@ -34,3 +36,11 @@ class Api(object):
     @property
     def search(self):
         return Search(api=self)
+
+    @property
+    def network(self):
+        return Network(api=self)
+
+    @property
+    def character(self):
+        return Character(api=self)
