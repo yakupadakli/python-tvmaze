@@ -5,12 +5,12 @@ import uuid
 from setuptools import setup, find_packages
 from pip.req import parse_requirements
 
-install_requirements = parse_requirements('requirements.txt', session=uuid.uuid1())
+install_requirements = parse_requirements("requirements.txt", session=uuid.uuid1())
 requirements = [str(req.req) for req in install_requirements]
 
 setup(
     name="python-tvmaze",
-    version="1.0.0a1",
+    version="1.0.1a1",
     description="A Python client for the TvMaze API.",
     license="MIT",
     author="Yakup Adaklı",

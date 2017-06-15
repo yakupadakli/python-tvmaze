@@ -31,7 +31,7 @@ class Model(object):
     def __repr__(self):
         items = filter(lambda x: x[0] in self._repr_values.keys(), vars(self).items())
         state = ['%s: %s' % (self._repr_values[k], repr(v)) for (k, v) in items]
-        return '<%s: %s: ' % (self.__class__.__name__, ', '.join(state))
+        return '<%s: %s: >' % (self.__class__.__name__, ', '.join(state))
 
 
 class Show(Model):
