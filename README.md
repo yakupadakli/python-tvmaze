@@ -54,7 +54,7 @@ Retrieve one specific episode from this show given its season number and episode
 
 Retrieve one specific episode from this show given its season number and episode number.
 
-    api.show.episode_by_number(1)
+    api.show.episode_by_number(1, season=1, number=1)
 
 ##### Show episode by date
 
@@ -109,7 +109,7 @@ Retrieve all (show-level) cast credits for a person.
 
 Retrieve all (show-level) crew credits for a person.
 
-    api.people.crew_credits(1)
+    api.people.crew_credits(100)
 
 
 ---
