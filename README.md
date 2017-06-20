@@ -16,7 +16,7 @@ Github and install it manually:
     cd python-unsplash
     python setup.py install
 
-Python 2.6 and 2.7, is supported for now.
+Python 2.7, 3.3, 3.4 and 3.6, is supported for now.
 
 ## Usage
 
