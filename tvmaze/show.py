@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from tvmaze.client import Client
+from tvmaze.expections import ShowNotFound
 from tvmaze.models import Show as ShowModel
 from tvmaze.models import Episode as EpisodeModel
 from tvmaze.models import Season as SeasonModel
@@ -22,6 +23,9 @@ class Show(Client):
     def get(self, show_id):
         result = self._get("/%s/%s" % (self.url, show_id))
         return ShowModel.parse(result)
+
+    def get_by_name(self, show_name):
+        return self.api.search.single_show(show_name)
 
     def episodes(self, show_id):
         result = self._get("/%s/%s/episodes" % (self.url, show_id))

@@ -1,3 +1,4 @@
+from tvmaze import expections
 
 
 class ResultSet(list):
@@ -5,13 +6,16 @@ class ResultSet(list):
 
 
 class Model(object):
+    not_found_error_class = expections.NotFound
 
     def __init__(self, **kwargs):
         self._repr_values = {"id": "ID"}
 
     @classmethod
-    def parse(cls, data):
+    def parse(cls, data, sub_item=False):
         data = data or {}
+        if not data and not sub_item:
+            raise cls.not_found_error_class()
         instance = cls() if data else None
         for key, value in data.items():
             if type(value) == str:
@@ -35,128 +39,137 @@ class Model(object):
 
 
 class Show(Model):
+    not_found_error_class = expections.ShowNotFound
 
     def __init__(self, **kwargs):
         super(Show, self).__init__(**kwargs)
         self._repr_values = {"name": "Name"}
 
     @classmethod
-    def parse(cls, data):
-        show = super(Show, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        show = super(Show, cls).parse(data, sub_item=sub_item)
         if hasattr(show, "image"):
-            show.image = Image.parse(show.image)
+            show.image = Image.parse(show.image, sub_item=True)
         if hasattr(show, "network"):
-            show.network = Network.parse(show.network)
+            show.network = Network.parse(show.network, sub_item=True)
         if hasattr(show, "externals"):
-            show.externals = External.parse(show.externals)
+            show.externals = External.parse(show.externals, sub_item=True)
         if hasattr(show, "rating"):
-            show.rating = Rating.parse(show.rating)
+            show.rating = Rating.parse(show.rating, sub_item=True)
         if hasattr(show, "schedule"):
-            show.schedule = Schedule.parse(show.schedule)
+            show.schedule = Schedule.parse(show.schedule, sub_item=True)
         if hasattr(show, "webChannel"):
-            show.webChannel = WebChannel.parse(show.webChannel)
+            show.webChannel = WebChannel.parse(show.webChannel, sub_item=True)
         return show
 
 
 class Episode(Model):
+    not_found_error_class = expections.EpisodeNotFound
 
     def __init__(self, **kwargs):
         super(Episode, self).__init__(**kwargs)
         self._repr_values = {"name": "Name", "season": "Season", "number": "Episode"}
 
     @classmethod
-    def parse(cls, data):
-        episode = super(Episode, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        episode = super(Episode, cls).parse(data, sub_item=sub_item)
         if hasattr(episode, "show"):
-            episode.show = Show.parse(episode.show)
+            episode.show = Show.parse(episode.show, sub_item=True)
         return episode
 
 
 class Season(Model):
+    not_found_error_class = expections.SeasonNotFound
 
     def __init__(self, **kwargs):
         super(Season, self).__init__(**kwargs)
         self._repr_values = {"number": "Season"}
 
     @classmethod
-    def parse(cls, data):
-        season = super(Season, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        season = super(Season, cls).parse(data, sub_item=sub_item)
         if hasattr(season, "network"):
-            season.network = Network.parse(season.network)
+            season.network = Network.parse(season.network, sub_item=True)
         if hasattr(season, "image"):
-            season.image = Image.parse(season.image)
+            season.image = Image.parse(season.image, sub_item=True)
         return season
 
 
 class Cast(Model):
+    not_found_error_class = expections.ShowNotFound
 
     @classmethod
-    def parse(cls, data):
-        cast = super(Cast, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        cast = super(Cast, cls).parse(data, sub_item=sub_item)
         if hasattr(cast, "person"):
-            cast.person = Person.parse(cast.person)
+            cast.person = Person.parse(cast.person, sub_item=True)
         if hasattr(cast, "character"):
-            cast.character = Character.parse(cast.character)
+            cast.character = Character.parse(cast.character, sub_item=True)
         return cast
 
 
 class Person(Model):
+    not_found_error_class = expections.PersonNotFound
 
     def __init__(self, **kwargs):
         super(Person, self).__init__(**kwargs)
         self._repr_values = {"name": "Name"}
 
     @classmethod
-    def parse(cls, data):
-        person = super(Person, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        person = super(Person, cls).parse(data, sub_item=sub_item)
         if hasattr(person, "image"):
-            person.image = Image.parse(person.image)
+            person.image = Image.parse(person.image, sub_item=True)
         return person
 
 
 class Character(Model):
+    not_found_error_class = expections.CharacterNotFound
 
     def __init__(self, **kwargs):
         super(Character, self).__init__(**kwargs)
         self._repr_values = {"name": "Name"}
 
     @classmethod
-    def parse(cls, data):
-        character = super(Character, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        character = super(Character, cls).parse(data, sub_item=sub_item)
         if hasattr(character, "image"):
-            character.image = Image.parse(character.image)
+            character.image = Image.parse(character.image, sub_item=True)
         return character
 
 
 class Crew(Model):
+    not_found_error_class = expections.CrewNotFound
 
     def __init__(self, **kwargs):
         super(Crew, self).__init__(**kwargs)
         self._repr_values = {"type": "Type"}
 
     @classmethod
-    def parse(cls, data):
-        crew = super(Crew, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        crew = super(Crew, cls).parse(data, sub_item=sub_item)
         if hasattr(crew, "person"):
-            crew.person = Person.parse(crew.person)
+            crew.person = Person.parse(crew.person, sub_item=True)
         return crew
 
 
 class Aka(Model):
+    not_found_error_class = expections.AkaNotFound
 
     def __init__(self, **kwargs):
         super(Aka, self).__init__(**kwargs)
         self._repr_values = {"name": "Name"}
 
     @classmethod
-    def parse(cls, data):
-        aka = super(Aka, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        aka = super(Aka, cls).parse(data, sub_item=sub_item)
         if hasattr(aka, "country"):
-            aka.country = Country.parse(aka.country)
+            aka.country = Country.parse(aka.country, sub_item=True)
         return aka
 
 
 class Country(Model):
+    not_found_error_class = expections.CountryNotFound
 
     def __init__(self, **kwargs):
         super(Country, self).__init__(**kwargs)
@@ -164,67 +177,72 @@ class Country(Model):
 
 
 class People(Model):
+    not_found_error_class = expections.PeopleNotFound
 
     def __init__(self, **kwargs):
         super(People, self).__init__(**kwargs)
         self._repr_values = {"name": "Name"}
 
     @classmethod
-    def parse(cls, data):
-        people = super(People, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        people = super(People, cls).parse(data, sub_item=sub_item)
         if hasattr(people, "image"):
-            people.image = Image.parse(people.image)
+            people.image = Image.parse(people.image, sub_item=True)
         return people
 
 
 class Image(Model):
-    pass
+    not_found_error_class = expections.ImageNotFound
 
 
 class CastCredit(Model):
+    not_found_error_class = expections.CastCreditNotFound
 
     @classmethod
-    def parse(cls, data):
-        cast_credit = super(CastCredit, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        cast_credit = super(CastCredit, cls).parse(data, sub_item=sub_item)
         if hasattr(cast_credit, "_embedded"):
             character = cast_credit._embedded.get("character")
-            cast_credit.character = Character.parse(character)
+            cast_credit.character = Character.parse(character, sub_item=True)
 
             show = cast_credit._embedded.get("show")
-            cast_credit.show = Show.parse(show)
+            cast_credit.show = Show.parse(show, sub_item=True)
         return cast_credit
 
 
 class CrewCredit(Model):
+    not_found_error_class = expections.CrewCreditNotFound
 
     def __init__(self, **kwargs):
         super(CrewCredit, self).__init__(**kwargs)
         self._repr_values = {"type": "Type"}
 
     @classmethod
-    def parse(cls, data):
-        crew_credit = super(CrewCredit, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        crew_credit = super(CrewCredit, cls).parse(data, sub_item=sub_item)
         if hasattr(crew_credit, "_embedded"):
             show = crew_credit._embedded.get("show")
-            crew_credit.show = Show.parse(show)
+            crew_credit.show = Show.parse(show, sub_item=True)
         return crew_credit
 
 
 class Network(Model):
+    not_found_error_class = expections.NetworkNotFound
 
     def __init__(self, **kwargs):
         super(Network, self).__init__(**kwargs)
         self._repr_values = {"name": "Name"}
 
     @classmethod
-    def parse(cls, data):
-        network = super(Network, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        network = super(Network, cls).parse(data, sub_item=sub_item)
         if hasattr(network, "country"):
-            network.country = Country.parse(network.country)
+            network.country = Country.parse(network.country, sub_item=True)
         return network
 
 
 class External(Model):
+    not_found_error_class = expections.ExternalNotFound
 
     def __init__(self, **kwargs):
         super(External, self).__init__(**kwargs)
@@ -232,6 +250,7 @@ class External(Model):
 
 
 class Rating(Model):
+    not_found_error_class = expections.RatingNotFound
 
     def __init__(self, **kwargs):
         super(Rating, self).__init__(**kwargs)
@@ -239,6 +258,7 @@ class Rating(Model):
 
 
 class Schedule(Model):
+    not_found_error_class = expections.ScheduleNotFound
 
     def __init__(self, **kwargs):
         super(Schedule, self).__init__(**kwargs)
@@ -246,14 +266,15 @@ class Schedule(Model):
 
 
 class WebChannel(Model):
+    not_found_error_class = expections.WebChannelNotFound
 
     def __init__(self, **kwargs):
         super(WebChannel, self).__init__(**kwargs)
         self._repr_values = {"time": "Time", "days": "Days"}
 
     @classmethod
-    def parse(cls, data):
-        web_channel = super(WebChannel, cls).parse(data)
+    def parse(cls, data, sub_item=False):
+        web_channel = super(WebChannel, cls).parse(data, sub_item=sub_item)
         if hasattr(web_channel, "country"):
-            web_channel.country = Country.parse(web_channel.country)
+            web_channel.country = Country.parse(web_channel.country, sub_item=True)
         return web_channel

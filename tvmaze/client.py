@@ -1,5 +1,7 @@
 import requests
 
+from tvmaze.expections import ConnectionError, TvMazeException
+
 
 class Client(object):
     """
@@ -16,19 +18,17 @@ class Client(object):
 
         try:
             response = requests.request(method, url, params=params, data=data, headers=headers, **kwargs)
-        except Exception, e:
-            raise Exception("Connection error: %s" % e)
+        except Exception as e:
+            raise ConnectionError(e)
 
         try:
-            """
-            {u'status': 404, u'message': u'Page not found.', u'code': 0, u'name': u'Not Found', 
-            u'previous': {u'message': u'Unable to resolve the request "shows/1/episodes/".', 
-            u'code': 0, u'name': u'Invalid Route'}}
-            """
-            if not self._is_2xx(response.status_code):
+            if self._is_4xx(response.status_code):
+                result = None
+            elif not self._is_2xx(response.status_code):
                 message = response.json().get("message")
-                raise Exception(message)
-            result = response.json()
+                raise TvMazeException(message)
+            else:
+                result = response.json()
         except ValueError:
             result = None
         return result
