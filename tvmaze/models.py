@@ -246,7 +246,7 @@ class External(Model):
 
     def __init__(self, **kwargs):
         super(External, self).__init__(**kwargs)
-        self._repr_values = {"imdb": "IMDB"}
+        self._repr_values = {"imdb": "IMDB", "tvrage": "TVRage", "thetvdb": "TheTVDB"}
 
 
 class Rating(Model):
