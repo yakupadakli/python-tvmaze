@@ -13,7 +13,7 @@ You may also use Git to clone the repository from
 Github and install it manually:
 
     git clone https://github.com/yakupadakli/python-tvmaze.git
-    cd python-unsplash
+    cd python-tvmaze
     python setup.py install
 
 Python 2.7, 3.3, 3.4 and 3.6, is supported for now.
