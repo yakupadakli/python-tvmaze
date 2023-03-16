@@ -3,10 +3,7 @@
 
 import uuid
 from setuptools import setup, find_packages
-from pip.req import parse_requirements
 
-install_requirements = parse_requirements("requirements.txt", session=uuid.uuid1())
-requirements = [str(req.req) for req in install_requirements]
 
 setup(
     name="python-tvmaze",
@@ -17,17 +14,20 @@ setup(
     author_email="yakup.adakli@gmail.com",
     url="http://github.com/yakupadakli/python-tvmaze.git",
     packages=find_packages(exclude=["tests"]),
-    install_requires=requirements,
+    install_requires=[
+        "requests==2.28.2",
+        "six==1.16.0"
+    ],
     keywords="tvmaze library",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Topic :: Software Development :: Libraries",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.11",
     ],
     zip_safe=True,
 )
