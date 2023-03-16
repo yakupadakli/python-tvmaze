@@ -15,6 +15,7 @@ setup(
     url="http://github.com/yakupadakli/python-tvmaze.git",
     packages=find_packages(exclude=["tests"]),
     install_requires=[
+        "pytest==7.2.2",
         "requests==2.28.2",
         "six==1.16.0"
     ],
