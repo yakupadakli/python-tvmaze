@@ -8,6 +8,7 @@ from tvmaze.models import Season as SeasonModel
 from tvmaze.models import Cast as CastModel
 from tvmaze.models import Crew as CrewModel
 from tvmaze.models import Aka as AkaModel
+from tvmaze.models import Image as ImageModel
 
 
 class Show(Client):
@@ -56,3 +57,7 @@ class Show(Client):
     def akas(self, show_id):
         result = self._get("/%s/%s/akas" % (self.url, show_id))
         return AkaModel.parse_list(result)
+
+    def images(self, show_id):
+        result = self._get("/%s/%s/images" % (self.url, show_id))
+        return ImageModel.parse_list(result)

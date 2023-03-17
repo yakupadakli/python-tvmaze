@@ -194,6 +194,17 @@ class People(Model):
 class Image(Model):
     not_found_error_class = expections.ImageNotFound
 
+    def __init__(self, **kwargs):
+        super(Image, self).__init__(**kwargs)
+        self._repr_values = {"id": "ID", "type": "Type"}
+
+    @classmethod
+    def parse(cls, data, sub_item=False):
+        image = super(Image, cls).parse(data, sub_item=sub_item)
+        if hasattr(image, "resolutions"):
+            image.resolutions = Resolution.parse(image.resolutions, sub_item=True)
+        return image
+
 
 class CastCredit(Model):
     not_found_error_class = expections.CastCreditNotFound
@@ -278,3 +289,16 @@ class WebChannel(Model):
         if hasattr(web_channel, "country"):
             web_channel.country = Country.parse(web_channel.country, sub_item=True)
         return web_channel
+
+
+class Resolution(Model):
+    not_found_error_class = expections.ResolutionNotFound
+
+    @classmethod
+    def parse(cls, data, sub_item=False):
+        resolution = super(Resolution, cls).parse(data, sub_item=sub_item)
+        if hasattr(resolution, "original"):
+            resolution.original = Model.parse(resolution.original, sub_item=True)
+        if hasattr(resolution, "medium"):
+            resolution.medium = Model.parse(resolution.medium, sub_item=True)
+        return resolution
