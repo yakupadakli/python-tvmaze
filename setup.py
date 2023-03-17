@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="python-tvmaze",
-    version="1.0.4",
+    version="1.0.5",
     description="A Python client for the TvMaze API.",
     license="MIT",
     author="Yakup Adaklı",
