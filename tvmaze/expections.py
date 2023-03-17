@@ -91,3 +91,7 @@ class ScheduleNotFound(NotFound):
 
 class WebChannelNotFound(NotFound):
     message = six.text_type("Web Channel Not Found")
+
+
+class ResolutionNotFound(NotFound):
+    message = six.text_type("Resolution Not Found")

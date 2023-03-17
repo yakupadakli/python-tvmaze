@@ -3,7 +3,7 @@
 import unittest
 
 from tvmaze.api import Api
-from tvmaze.models import Show, Episode, Season, Cast, Crew, Aka
+from tvmaze.models import Show, Episode, Season, Cast, Crew, Aka, Image
 
 
 class ShowTests(unittest.TestCase):
@@ -53,3 +53,8 @@ class ShowTests(unittest.TestCase):
         akas_list = self.api.show.akas(1)
         self.assertIsInstance(akas_list, list)
         self.assertIsInstance(akas_list[0], Aka)
+
+    def test_show_images(self):
+        images_list = self.api.show.images(1)
+        self.assertIsInstance(images_list, list)
+        self.assertIsInstance(images_list[0], Image)
