@@ -11,7 +11,7 @@ setup(
     license="MIT",
     author="Yakup Adaklı",
     author_email="yakup.adakli@gmail.com",
-    url="http://github.com/yakupadakli/python-tvmaze.git",
+    url="https://github.com/yakupadakli/python-tvmaze",
     packages=find_packages(exclude=["tests"]),
     python_requires=">=3.8, <4",
     install_requires=[
