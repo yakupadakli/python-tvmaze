@@ -16,7 +16,7 @@ setup(
     python_requires=">=3.8, <4",
     install_requires=[
         "pytest",
-        "requests==2.28.2",
+        "requests==2.31.0",
         "six==1.16.0"
     ],
     keywords="tvmaze python library",
